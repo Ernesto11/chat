@@ -63,6 +63,9 @@
         },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "com.apachecordova.chat"
+        },
+        "cordova-plugin-fcm": {
+            "PACKAGE_NAME": "com.apachecordova.chat"
         }
     },
     "dependent_plugins": {
