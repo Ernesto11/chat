@@ -34,6 +34,8 @@
         <div id="signup">   
           <h1>Registrarse</h1>
           
+
+          <!-- FORM REGISTRARSE -->
           <form id="formRegistro" name="formRegistro" action="/" method="post">
           
           <div class="top-row">
@@ -65,32 +67,35 @@
 
         </div>
         
+
+
+        <!-- FORM LOGIN USUARIO -->
         <div id="login">   
           <h1>Bienvenido!</h1>
           
-          <form action="/" method="post">
+          <form id="formLogin" name="login" action="/" method="post">
           
             <div class="field-wrap">
             <label>
               Teléfono<span class="req">*</span>
             </label>
-            <input type="tel"required autocomplete="off"/>
+            <input id="telUsuario" type="tel"required autocomplete="off"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Contraseña<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input id="passUsuario" type="password"required autocomplete="off"/>
           </div>
           
-          <button class="button button-block"/>Iniciar Sesión</button>
+          <button type="button" id="btnLogin" class="button button-block"/>Iniciar Sesión</button>
           
           </form>
 
         </div>
         
-      </div><!-- tab-content -->
+      </div>
       
 </div> <!-- /form -->
   <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
@@ -119,6 +124,10 @@
   var txtTelefono = document.getElementById('telefono');
   var txtContrasena = document.getElementById('contrasena');
   var btnRegistrar = document.getElementById('btnRegistrar');
+  var txtTelefonoUsuario = document.getElementById('telUsuario');
+  var txtContrasenaUsuario = document.getElementById('passUsuario');
+  var btnLogin = document.getElementById('btnLogin');
+
 
   btnRegistrar.addEventListener("click",function(){
     var nombre = txtNombre.value;
@@ -133,6 +142,35 @@
     alert('Usuario: '+nombre+', registrado correctamente.');
     document.getElementById("formRegistro").reset();
   });
+
+  btnLogin.addEventListener("click",function(){
+    var telefono = txtTelefonoUsuario.value;
+    var contrasena = txtContrasenaUsuario.value;
+
+    var query = firebase.database().ref().child('user').orderByChild('phone').equalTo(telefono);
+    var pass;
+    var phone;
+    var nameUser;
+    var bandera = 0;
+    
+    query.once("value", function(snapshot) { 
+    snapshot.forEach(function(child) {
+      var element = child.val();
+      pass     = element.pass;
+      phone    = element.phone;
+      nameUser = element.nameUser;   
+  // this will print the key of a message
+      });
+    if(pass === contrasena && phone === telefono){
+      location.href="index1.html";
+    }
+    else{
+      alert("Usuario incorrecto");
+    }
+    document.getElementById("formLogin").reset();
+    });
+  });
+
 
   </script>
 
