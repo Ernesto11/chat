@@ -34,14 +34,14 @@
         <div id="signup">   
           <h1>Registrarse</h1>
           
-          <form action="/" method="post">
+          <form id="formRegistro" name="formRegistro" action="/" method="post">
           
           <div class="top-row">
             <div class="field-wrap">
               <label>
                 Nombre<span class="req">*</span>
               </label>
-              <input type="text" required autocomplete="off" />
+              <input id="nombre" name="nombre" type="text" required autocomplete="off" />
             </div>
           </div>
           <br><br>
@@ -49,17 +49,17 @@
             <label>
               Teléfono<span class="req">*</span>
             </label>
-            <input type="tel"required autocomplete="off"/>
+            <input id="telefono" name="telefono" type="tel"required autocomplete="off"/>
           </div>
           
           <div class="field-wrap">
             <label>
               Contraseña<span class="req">*</span>
             </label>
-            <input type="password"required autocomplete="off"/>
+            <input id="contrasena" name="contrasena" type="password"required autocomplete="off"/>
           </div>
           
-          <button type="submit" class="button button-block"/>Registrar</button>
+          <button type="button" id="btnRegistrar" name="btnRegistrar" class="button button-block"/>Registrar</button>
           
           </form>
 
@@ -101,6 +101,40 @@
     </script>
 
     <script src="js/index.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/3.7.5/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAwWIexKZTRv-psxcmeY1RZGGfFY4a5WB8",
+    authDomain: "prueba-52499.firebaseapp.com",
+    databaseURL: "https://prueba-52499.firebaseio.com",
+    projectId: "prueba-52499",
+    storageBucket: "prueba-52499.appspot.com",
+    messagingSenderId: "792001499423"
+  };
+  firebase.initializeApp(config);
+
+  var txtNombre = document.getElementById('nombre');
+  var txtTelefono = document.getElementById('telefono');
+  var txtContrasena = document.getElementById('contrasena');
+  var btnRegistrar = document.getElementById('btnRegistrar');
+
+  btnRegistrar.addEventListener("click",function(){
+    var nombre = txtNombre.value;
+    var telefono = txtTelefono.value;
+    var contrasena = txtContrasena.value;
+
+    firebase.database().ref('user').push({
+        nameUser: nombre,
+        phone: telefono,
+        pass: contrasena
+    });
+    alert('Usuario: '+nombre+', registrado correctamente.');
+    document.getElementById("formRegistro").reset();
+  });
+
+  </script>
 
 </body>
 </html>
